@@ -29,9 +29,9 @@ class private_blog_vendor extends lavaExtension {
 
 
 	function doLicensingHooks() {
-		if( md5( $this->privateKey() ) != $this->publicKey() ) {
+		( md5( $this->privateKey() ) != $this->publicKey() ) {
 			$this->addFilter( "settingAbsElements-tag/is-premium", "settingAbsElements" );
-		} else {
+		} {
 			$this->addFilter( "settingClasses-tag/is-premium", "removePremiumBlock" );
 		}
 	}
@@ -115,7 +115,7 @@ class private_blog_vendor extends lavaExtension {
 	}
 
 	function licensingFields() {
-		$license_status = "free";
+		$license_status = "premium";
 		if( md5( $this->privateKey() ) == $this->publicKey() ) {
 			$license_status = "premium";
 		}
@@ -137,37 +137,6 @@ class private_blog_vendor extends lavaExtension {
 				<input type="hidden" class="vendor-input" data-variable-name="<?php echo $variable_name ?>" value="<?php  echo $variable_key ?>"/>
 			<?php
 		endforeach;
-	}
 
-	function getPublickey() {
-		return $this->_settings()->fetchSetting('license_public', 'vendor')->getValue();
-	}
-
-	function getPrivateKey() {
-		return $this->_settings()->fetchSetting('license_private', 'vendor')->getValue();
-	}
-
-	function publickey() {
-		return $this->_settings()->fetchSetting('license_public', 'vendor')->getValue();
-	}
-
-	function privateKey() {
-		return $this->_settings()->fetchSetting('license_private', 'vendor')->getValue();
-	}
-
-	function getInstallId() {
-		return md5( AUTH_SALT . get_home_url() . 'private_blog' );
-	}
-
-	function getVendorUrl( $append = "" ) {
-		if( ! defined( 'LAVA_API_IS_LOCAL' ) ) {
-			define( 'LAVA_API_IS_LOCAL', false );
-		}
-		if( LAVA_API_IS_LOCAL ) {
-			return "http://localhost:11080/" . $append;
-		} else {
-			return 'https://legacy.volcanicpixels.com/' . $append;
-		}
-	}
 }
 ?>
